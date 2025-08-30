@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      background: linear-gradient(to right, #6dd5ed, #2193b0);
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      width: 80%;
+    }
+
+    /* To-do App (Left) */
+    .todo-container {
+      flex: 1;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .todo-container h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #2193b0;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background: #f7f7f7;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .task-btns button {
+      margin-left: 5px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .edit-btn { background: #ffb400; }
+    .delete-btn { background: #e63946; color: white; }
+
+    /* Info Section (Right) */
+    .info {
+      flex: 1;
+      background: #ffffffb0;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .info h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .info p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left: To-Do List -->
+    <div class="todo-container">
+      <h2> To-Do List</h2>
+      <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Add a task...">
+        <button onclick="addTask()">Add</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+
+    <!-- Right: Info About To-Do List -->
+<div class="info">
+  <h2>ℹ️ What is To-Do List?</h2>
+  <ul>
+    <li>Save tasks you need to perform.</li>
+    <li>Mark tasks as completed when done.</li>
+    <li>Edit tasks anytime if required.</li>
+    <li>Delete tasks after completion.</li>
+    <li>Helps you stay organized & productive.</li>
+  </ul>
+</div>
+
+  </div>
+
+  <script>
+    const taskList = document.getElementById("taskList");
+
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+      if (!taskText) return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span onclick="toggleComplete(this)">${taskText}</span>
+        <div class="task-btns">
+          <button class="edit-btn" onclick="editTask(this)">Edit</button>
+          <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+        </div>
+      `;
+      taskList.appendChild(li);
+      input.value = "";
+    }
+
+    function toggleComplete(span) {
+      span.classList.toggle("completed");
+    }
+
+    function editTask(btn) {
+      const li = btn.parentElement.parentElement;
+      const span = li.querySelector("span");
+      const newText = prompt("Edit task:", span.textContent);
+      if (newText) span.textContent = newText;
+    }
+
+    function deleteTask(btn) {
+      btn.parentElement.parentElement.remove();
+    }
+  </script>
+</body>
+</html>
